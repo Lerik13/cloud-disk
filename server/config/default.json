@@ -1,0 +1,5 @@
+{
+	"serverPort": 5000,
+	"dbUrl": "mongodb+srv://lera:qazqwe981908@cloud.uxt2g.mongodb.net/cloud?retryWrites=true&w=majority"
+	
+}
