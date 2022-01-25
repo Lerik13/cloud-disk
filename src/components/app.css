@@ -1,0 +1,19 @@
+/* @import "../utils/colors"; */
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	color: #566885;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: #E9E6E6;
+}
+
+#root {
+	width: 100%;
+}
