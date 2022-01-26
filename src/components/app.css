@@ -1,5 +1,3 @@
-/* @import "../utils/colors"; */
-
 * {
 	margin: 0;
 	padding: 0;
@@ -7,13 +5,26 @@
 	color: #566885;
 }
 
+#root {
+	width: 100%;
+}
+:root {
+	--main-bg-color: #E9E6E6;
+	--font-color: #566885;
+}
+
 body {
+	background-color: var(--main-bg-color);
+}
+
+.app {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	background-color: #E9E6E6;
 }
 
-#root {
-	width: 100%;
+.wrap {
+	width: 1140px;
+	display: flex;
+	flex-direction: column;
 }
