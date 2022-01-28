@@ -70,7 +70,7 @@ router.post('/login',
 	}
 )
 
-router.post('/auth', authMiddleware,
+router.get('/auth', authMiddleware,
 	async (req, res) => {
 		try {
 			const user = await User.findOne({id: req.user.id})
