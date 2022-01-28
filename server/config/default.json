@@ -1,5 +1,6 @@
 {
 	"serverPort": 5000,
 	"dbUrl": "mongodb+srv://lera:qazqwe981908@cloud.uxt2g.mongodb.net/cloud?retryWrites=true&w=majority",
-	"secretKey": "secret-mern"
+	"secretKey": "secret-mern",
+	"filePath": "E:\\__WEB\\JS__React\\14__UlbiTV__MERN\\mern-cloud-disc\\server\\files"
 }
