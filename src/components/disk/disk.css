@@ -7,10 +7,10 @@
 }
 
 .disk__back {
-
+	
 }
 
-.disk__create {
+.disk__create {	
 	margin-left: 10px;
 }
 
@@ -48,4 +48,17 @@
 
 .popup__create {
 	align-self: flex-end;
+}
+
+.disk__upload {
+
+}
+
+.disk__upload-input {
+	display: none;
+}
+.disk__upload-label {
+	
+	border: 2px dashed var(--font-color);
+	margin-left: 10px;
 }

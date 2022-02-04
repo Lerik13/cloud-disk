@@ -9,8 +9,7 @@ const defaultState = {
 	files: [],
 	currentDir: null,
 	popupDisplay: 'none',
-	dirStack: [],
-	backDir: null
+	dirStack: []
 }
 
 export default function fileReducer(state = defaultState, action) {
@@ -20,7 +19,6 @@ export default function fileReducer(state = defaultState, action) {
 		case ADD_FILE: return {...state, files: [...state.files, action.payload]}
 		case SET_POPUP_DISPLAY: return {...state, popupDisplay: action.payload}
 		case PUSH_TO_STACK: return {...state, dirStack: [...state.dirStack, action.payload]}
-		sw//case POP_FROM_STACK: return {...state, dirStack: state.dirStack.slice(-1,1)}
 		default:
 			return state
 	}
@@ -31,4 +29,3 @@ export const setCurrentDir = (dir) => ({type: SET_CURRENT_DIR, payload: dir})
 export const addFile = (file) => ({type: ADD_FILE, payload: file})
 export const setPopupDisplay = (display) => ({type: SET_POPUP_DISPLAY, payload: display})
 export const pushToStack = (dir) => ({type: PUSH_TO_STACK, payload: dir})
-//export const popFromStack = () => ({type: POP_FROM_STACK})

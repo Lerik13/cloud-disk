@@ -28,3 +28,9 @@ body {
 	display: flex;
 	flex-direction: column;
 }
+
+.btn {
+	display: block;
+	padding: 5px 10px;
+	cursor: pointer;
+}
