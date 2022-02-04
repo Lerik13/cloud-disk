@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+#.files of Users - testing
+/files
+
 # testing
 /coverage
 
