@@ -1,46 +1,52 @@
-// Найти пересечение 2-х массивов
-// Find intersection of 2 arrays
-const input1 = [1,2,2,1];
-const input2 = [2,2];
-// Output = [2,2]
-const input3 = [4,9,5];
-const input4 = [9,4,9,8,4];
-// Output = [4,9] or [9,4]
-// O(n*m)
-const intersectMy  = function (nums1, nums2) {		
-	const res = [];
-	for (let i = 0; i < nums1.length; i++) {
-		const current = nums1[i];
-		for (let j = 0; j < nums2.length; j++) {
-				if (current === nums2[j]) {
-					res.push(current);
-					nums2.splice(j, 1);
-					break;
-				}
-		}
-	}
-	return res;
-}
+let classNames = [
+	'header', 'menu', 'menu-item', 'menu-item', 'footer', 'menu', 'link', 'link', 'link', 'link'
+];
 
-const intersect  = function (nums1, nums2) {	// O(n+m)	n = length of array1, m - length of array2
-	const res = [];								// Complexity of memory = O(n)
-
-	let map = nums1.reduce((acc, elem) => {
-		acc[elem] = acc[elem] ? acc[elem] + 1 : 1;
+function getUniq(arr) {
+	const uniq_count = arr.reduce((acc, elem) => {
+		if (acc[elem]) acc[elem] += 1
+		else acc[elem] = 1
 		return acc;
 	}, {})
-
-	for (let i = 0; i < nums2.length; i++) {
-		const current = nums2[i];
-		let count = map[current];
-
-		if (count && count>0) {
-			map[current] -=  1;
-			res.push(current);
-		}
-	}
-	return res;
+	return Object.entries(uniq_count)
+		.sort((a,b) => { 
+			return b[1]-a[1]
+		})
+		.map((elem) => {
+			return elem[0] 
+		})
+		
 }
-console.log(intersect(input1, input2));
-console.log(intersect(input3, input4));
 
+//console.log(getUniq(classNames));
+
+let classNamesCount = {};
+
+for (let i = 0; i < classNames.length; i++) {
+	const current = classNames[i];
+	if (classNamesCount[current]) {
+		classNamesCount[current] += 1; 
+	} else {
+		classNamesCount[current] = 1;
+	}
+}
+let result = Object.keys(classNamesCount).sort((a,b) => classNamesCount[b] - classNamesCount[a])
+console.log(result);
+
+// after Optimization:
+/*
+let classNamesCount = {};
+let arrayUniq = [];
+
+for (let i = 0; i < classNames.length; i++) {
+	const current = classNames[i];
+	if (classNamesCount[current]) {
+		classNamesCount[current] += 1; 
+	} else {
+		classNamesCount[current] = 1;
+		arrayUniq.push(current)
+	}
+}
+let result = arrayUniq.sort((a,b) => classNamesCount[b] - classNamesCount[a])
+console.log(result);
+*/
