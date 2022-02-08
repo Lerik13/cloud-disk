@@ -9,6 +9,20 @@
 	transform: scale(1.01);
 	transition-duration: 0.2s;
 }
+.file:hover .file__date {
+	grid-column-start: 3;
+}
+.file:hover .file__size {
+	grid-column-start: 4;
+}
+.file:hover .file__download {
+	grid-column-start: 5;
+	display: block;
+}
+.file:hover .file__delete {
+	grid-column-start: 6;
+	display: block;
+}
 
 .file__img {
 	justify-self: center;
@@ -21,4 +35,22 @@
 .file__size {
 	grid-column-start: 6;
 	justify-self: center;
+}
+
+.file__btn {
+	display: none;
+	justify-self: center;
+	width: 58px;
+	height: 34px;
+	border-radius: 37px;
+	border: 1px solid var(--font-color);
+}
+.file__btn:hover {
+	cursor: pointer;
+}
+.file__download {
+
+}
+.file__delete {
+	
 }
