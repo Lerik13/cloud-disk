@@ -65,11 +65,17 @@ class FileController {
 
 			const type = file.name.split('.').pop()
 
+			//let filePath = parent?.path
+			let filePath = file.name
+			if (parent) {
+				filePath = parent.path + "\\" + file.name
+			}
+
 			const dbFile = new File({
 				name: file.name,
 				type,
 				size: file.size,
-				path: parent?.path,
+				path: filePath,
 				parent: parent?._id,
 				user: user._id
 			})
@@ -87,15 +93,39 @@ class FileController {
 
 	async downloadFile(req, res) {
 		try {
+			//console.log(req);
 			const file = await File.findOne({_id: req.query.id, user: req.user.id}) 
-			const path = config.get('filePath') +'\\'+ req.user.id +'\\'+ file.path +'\\'+ file.name
+			const path = config.get('filePath') +'\\'+ req.user.id +'\\'+ file.path
+			//console.log('path = ', path);
 			if (fs.existsSync(path)) {
 				return res.download(path, file.name)
 			}
-			return res.status(500).json({message: "Download error"})
+			return res.status(400).json({message: "Download error"})
 		} catch (e) {
 			console.log(e);
 			res.status(500).json({message: "Download error"})
+		}
+	}
+
+	async deleteFile(req, res) {
+		try {
+			const file = await File.findOne({_id: req.query.id, user: req.user.id})
+			if (!file) {
+				return res.status(400).json({message: 'File not found in BD'})
+			}
+			console.log('!!!!! path = '+fileService.getPath(file));
+			if (!fs.existsSync(fileService.getPath(file))) {
+				await file.remove()		// удаление модели д-х из БД = подчищение несоответсвий
+				return res.json({message: 'File not found'})
+			}
+			
+			fileService.deleteFile(file) // физическое удаление файла
+			await file.remove()			 // удаление модели д-х из БД 
+			return res.json({message: 'File was deleted'})
+		} catch(e) {
+			console.log(e);
+			console.log(e.message);
+			return res.status(400).json({message: 'Directory is not empty'})
 		}
 	}
 }
