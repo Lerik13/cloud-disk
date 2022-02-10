@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {setFiles, addFile} from '../reducers/fileReducer'
+import {setFiles, addFile, deleteFileAction} from '../reducers/fileReducer'
 
 export function getFiles(dirId) {
 	return async dispatch => {
@@ -62,12 +62,14 @@ export function uploadFile(file, dirId) {
 }
 
 export async function downloadFile(file) {
+	//console.log('downloadFile =', file)
 	const response = await fetch(`http://localhost:5000/api/files/download?id=${file._id}`, {
 		headers: {
 			Authorization: `Bearer ${localStorage.getItem('token')}`
 		}
 	})
 	if (response.status === 200) {
+		//console.log('after status 200');
 		const blob = await response.blob() // ~ физич. ф-л объект, от сервера получаем ф-л в бинарном виде, нужно преобразовать в нормальный ф-л
 		const downloadUrl = window.URL.createObjectURL(blob)
 		const link = document.createElement('a');
@@ -76,5 +78,23 @@ export async function downloadFile(file) {
 		document.body.appendChild(link)
 		link.click()
 		link.remove()
+	}
+}
+
+export function deleteFile(file) {
+	return async dispatch => {
+		try {
+			const response = await axios.delete(`http://localhost:5000/api/files?id=${file._id}`, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				}
+			})
+			console.log('DELETE file in file.js: response: '+response)
+			dispatch(deleteFileAction(file._id))
+			alert(response.data.message)
+			//console.log(response.data)
+		} catch (e) {
+			alert(e.response.data.message)
+		}
 	}
 }

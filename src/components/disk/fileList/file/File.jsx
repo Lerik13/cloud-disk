@@ -4,7 +4,7 @@ import './file.css'
 import dirIcon from '../../../../assets/img/dir.svg'
 import fileIcon from '../../../../assets/img/file.svg'
 import { pushToStack, setCurrentDir } from '../../../../reducers/fileReducer';
-import { downloadFile } from '../../../../actions/file';
+import { deleteFile, downloadFile } from '../../../../actions/file';
 import deleteIcon from '../../../../assets/img/delete.svg'
 import downloadIcon from '../../../../assets/img/download.svg'
 
@@ -25,14 +25,19 @@ const File = ({file}) => {
 		downloadFile(file)
 	}
 
+	function deleteClickHandler(e){
+		e.stopPropagation()
+		dispatch(deleteFile(file))
+	}
+
 	return (
 		<div className='file' onClick={() => OpenDirHandler(file)}>
 			<img src={file.type === 'dir' ? dirIcon : fileIcon} alt="" className='file__img' />
 			<div className='file__name'>{file.name}</div>
 			<div className='file__date'>{file.date.slice(0,10)}</div>
 			<div className='file__size'>{file.size}</div>
-			{file.type !== 'dir' && <button onClick={(e) => downloadClickHandler(e)} className="file__btn file__download"><img src={downloadIcon} alt="" /></button>}
-			<button className="file__btn file__delete"><img src={deleteIcon} alt="" /></button>
+			{file.type !== 'dir' && <button onClick={(e) => downloadClickHandler(e)} className="file__btn file__download"><img src={downloadIcon} alt="Download" /></button>}
+			<button onClick={(e) => deleteClickHandler(e)} className="file__btn file__delete"><img src={deleteIcon} alt="Delete" /></button>
 		</div>
 	);
 };
