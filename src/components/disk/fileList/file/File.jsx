@@ -7,6 +7,7 @@ import { pushToStack, setCurrentDir } from '../../../../reducers/fileReducer';
 import { deleteFile, downloadFile } from '../../../../actions/file';
 import deleteIcon from '../../../../assets/img/delete.svg'
 import downloadIcon from '../../../../assets/img/download.svg'
+import sizeFormat from '../../../../utils/sizeFormat';
 
 
 const File = ({file}) => {
@@ -35,7 +36,7 @@ const File = ({file}) => {
 			<img src={file.type === 'dir' ? dirIcon : fileIcon} alt="" className='file__img' />
 			<div className='file__name'>{file.name}</div>
 			<div className='file__date'>{file.date.slice(0,10)}</div>
-			<div className='file__size'>{file.size}</div>
+			<div className='file__size'>{sizeFormat(file.size)}</div>
 			{file.type !== 'dir' && <button onClick={(e) => downloadClickHandler(e)} className="file__btn file__download"><img src={downloadIcon} alt="Download" /></button>}
 			<button onClick={(e) => deleteClickHandler(e)} className="file__btn file__delete"><img src={deleteIcon} alt="Delete" /></button>
 		</div>
