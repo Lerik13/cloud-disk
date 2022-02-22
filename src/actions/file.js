@@ -1,10 +1,12 @@
 import axios from 'axios'
+import { hideLoader, showLoader } from '../reducers/appReducer'
 import {setFiles, addFile, deleteFileAction} from '../reducers/fileReducer'
 import { addUploadFile, changeUploadFile, removeUploadFile, showUploader } from '../reducers/uploadReducer'
 
 export function getFiles(dirId) {
 	return async dispatch => {
 		try {
+			dispatch(showLoader())
 			const response = await axios.get(`http://localhost:5000/api/files${dirId ? '?parent='+dirId : ''}`, {
 				headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
 			})
@@ -12,6 +14,8 @@ export function getFiles(dirId) {
 			console.log(response.data)
 		} catch (e) {
 			alert(e.response.data.message)
+		} finally {
+			dispatch(hideLoader())
 		}
 	}
 }
