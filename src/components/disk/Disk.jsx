@@ -54,7 +54,7 @@ const Disk = () => {
 	if (loader) {
 		return (
 			<div className='loader'>
-				<div class="lds-dual-ring"></div>
+				<div className="lds-dual-ring"></div>
 			</div>
 		)
 	}
