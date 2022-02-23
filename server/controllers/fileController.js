@@ -95,7 +95,8 @@ class FileController {
 		try {
 			//console.log(req);
 			const file = await File.findOne({_id: req.query.id, user: req.user.id}) 
-			const path = config.get('filePath') +'\\'+ req.user.id +'\\'+ file.path
+			const path = fileService.getPath(file)
+
 			//console.log('path = ', path);
 			if (fs.existsSync(path)) {
 				return res.download(path, file.name)
@@ -113,7 +114,7 @@ class FileController {
 			if (!file) {
 				return res.status(400).json({message: 'File not found in BD'})
 			}
-			console.log('!!!!! path = '+fileService.getPath(file));
+			//console.log('!!!!! path = '+fileService.getPath(file));
 			if (!fs.existsSync(fileService.getPath(file))) {
 				await file.remove()		// удаление модели д-х из БД = подчищение несоответсвий
 				return res.json({message: 'File not found'})
