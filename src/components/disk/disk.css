@@ -105,3 +105,13 @@
 	  transform: rotate(360deg);
 	}
 }
+
+.disk__sort {
+	display: flex;
+	align-items: center;
+	margin-left: 10px;
+}
+
+.disk__select {
+	
+}

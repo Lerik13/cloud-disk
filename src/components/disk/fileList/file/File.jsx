@@ -15,9 +15,12 @@ const File = ({file}) => {
 	const currentDir = useSelector(state => state.files.currentDir)
 
 	function OpenDirHandler(file) {
+		//console.log('OpenDirHandler: currentDir='+currentDir+' file._id='+ file._id);
+
 		if (file.type === 'dir') {
 			dispatch(pushToStack(currentDir))
 			dispatch(setCurrentDir(file._id))
+			//console.log('OpenDirHandler: currentDir='+currentDir+' file._id='+ file._id);
 		}
 	}
 

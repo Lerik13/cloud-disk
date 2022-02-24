@@ -3,15 +3,30 @@ import { hideLoader, showLoader } from '../reducers/appReducer'
 import {setFiles, addFile, deleteFileAction} from '../reducers/fileReducer'
 import { addUploadFile, changeUploadFile, removeUploadFile, showUploader } from '../reducers/uploadReducer'
 
-export function getFiles(dirId) {
+export function getFiles(dirId, sort) {
 	return async dispatch => {
 		try {
 			dispatch(showLoader())
-			const response = await axios.get(`http://localhost:5000/api/files${dirId ? '?parent='+dirId : ''}`, {
+			//console.log('get Files: dirId='+dirId+', sort='+sort);
+			let url = `http://localhost:5000/api/files`
+			if (dirId && sort) {
+				url = `http://localhost:5000/api/files?parent=${dirId}&sort=${sort}`
+			}
+			else if (dirId) {
+				url = `http://localhost:5000/api/files?parent=${dirId}`
+			}
+			else if (sort) {
+				url = `http://localhost:5000/api/files?sort=${sort}`
+			}
+			
+			//console.log('url=',url);
+
+			const response = await axios.get(url, {
 				headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
 			})
 			dispatch(setFiles(response.data))
-			console.log(response.data)
+			
+			//console.log(response.data)
 		} catch (e) {
 			alert(e.response.data.message)
 		} finally {

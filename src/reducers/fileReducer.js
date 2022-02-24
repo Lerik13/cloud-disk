@@ -10,7 +10,7 @@ const defaultState = {
 	files: [],
 	currentDir: null,
 	popupDisplay: 'none',
-	dirStack: []
+	dirStack: []	// последняя открытая папка б. лежать на вершине стека
 }
 
 export default function fileReducer(state = defaultState, action) {
