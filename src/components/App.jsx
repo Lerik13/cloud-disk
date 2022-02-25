@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import {BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
-import Navbar from "./navbar/Navbar";
+import { useDispatch, useSelector } from "react-redux";
 import './app.css';
+import Navbar from "./navbar/Navbar";
 import Registration from "./authorization/Registration";
 import Login from "./authorization/Login";
 import Disk from "./disk/Disk";
-import { useDispatch, useSelector } from "react-redux";
+import Profile from "./profile/Profile";
 import { auth } from "../actions/user";
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
 						:
 						<Routes>
 							<Route path="/" element={<Disk />} />
+							<Route path="/profile" element={<Profile />} />
 							<Route path="*" element={<Navigate to="/" />} />
 						</Routes>
 					}
