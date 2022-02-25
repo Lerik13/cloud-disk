@@ -7,6 +7,7 @@
 
 #.files of Users - testing
 /files
+/static
 
 # testing
 /coverage
