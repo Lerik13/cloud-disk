@@ -4,9 +4,9 @@ const config = require('config')
 
 class FileService {
 
-	createDir(file) {
+	createDir(req, file) {
 		//const filePath = `${config.get('filePath')}\\${file.user}\\${file.path}`
-		const filePath = this.getPath(file)
+		const filePath = this.getPath(req, file)
 
 		return new Promise(((resolve, reject) => {
 			try {
@@ -22,8 +22,8 @@ class FileService {
 		}))
 	}
 
-	deleteFile(file) {
-		const path = this.getPath(file)
+	deleteFile(req, file) {
+		const path = this.getPath(req, file)
 		//console.log('path = '+ path);
 
 		if (file.path === 'dir') {
@@ -33,8 +33,8 @@ class FileService {
 		}
 	}
 	
-	getPath(file) {
-		return config.get('filePath') + '\\' + file.user +'\\'+ file.path
+	getPath(req, file) {
+		return req.filePath  + '\\' + file.user +'\\'+ file.path
 	}
 }
 

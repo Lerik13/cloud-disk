@@ -13,7 +13,7 @@ class FileController {
 			const parentFile = await File.findOne({_id: parent})
 			if (!parentFile) {
 				file.path = name
-				await fileService.createDir(file)
+				await fileService.createDir(req, file)
 			} else {
 				file.path = `${parentFile.path}\\${file.name}`
 				await fileService.createDir(file)
@@ -70,9 +70,9 @@ class FileController {
 
 			let path;
 			if (parent) {
-				path = `${config.get('filePath')}\\${user._id}\\${parent.path}\\${file.name}`
+				path = `${req.filePath}\\${user._id}\\${parent.path}\\${file.name}`
 			} else {
-				path = `${config.get('filePath')}\\${user._id}\\${file.name}`
+				path = `${req.filePath}\\${user._id}\\${file.name}`
 			}
 
 			if (fs.existsSync(path)) {
@@ -94,7 +94,7 @@ class FileController {
 				type,
 				size: file.size,
 				path: filePath,
-				parent: parent?._id,
+				parent: parent ? parent._id : null,
 				user: user._id
 			})
 
@@ -113,7 +113,7 @@ class FileController {
 		try {
 			//console.log(req);
 			const file = await File.findOne({_id: req.query.id, user: req.user.id}) 
-			const path = fileService.getPath(file)
+			const path = fileService.getPath(req, file)
 
 			//console.log('path = ', path);
 			if (fs.existsSync(path)) {
@@ -133,7 +133,7 @@ class FileController {
 				return res.status(400).json({message: 'File not found in BD'})
 			}
 			//console.log('!!!!! path = '+fileService.getPath(file));
-			if (!fs.existsSync(fileService.getPath(file))) {
+			if (!fs.existsSync(fileService.getPath(req, file))) {
 				await file.remove()		// удаление модели д-х из БД = подчищение несоответсвий
 				return res.json({message: 'File not found'})
 			}
