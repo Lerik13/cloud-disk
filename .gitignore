@@ -9,7 +9,7 @@ client/node_modules
 #.files of Users - testing
 /files
 server/files
-/static
+server/static
 
 # testing
 /coverage

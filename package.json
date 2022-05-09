@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Cloud App - MERN",
   "main": "index.js",
   "scripts": {
     "start": "node server/index.js",
