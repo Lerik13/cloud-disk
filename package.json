@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node server/index.js",
+    "server": "nodemon server/index.js",
+    "client": "npm start --prefix client"
   },
-  "author": "",
+  "author": "Kan Valeria",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
