@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700&display=swap");
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	color: #566885;
+}
+
+#root {
+	width: 100%;
+}
+:root {
+	--main-bg-color: #E9E6E6;
+	--font-color: #566885;
+}
+
+a {
+	text-decoration: none;
+}
+
+body {
+	line-height: 1;
+	font-size: 14px;
+	font-family: "Lato";
+	background-color: var(--main-bg-color);
+	/* min-width: 1200px; */
+}
+
+.app {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-height: 100%;
+	overflow: hidden;
+}
+
+.container {
+	max-width: 1200px;
+	/*display: flex;
+	align-items: center;
+	background: greenyellow;
+	width: 100%;
+	padding: 0px 10px 0px 10px; */
+	margin: 0 auto;
+	padding: 0 10px;
+	width: 100%;
+}
+
+.wrap {
+	width: 1140px;
+	padding: 0 5px;
+	display: flex;
+	flex-direction: column;
+}
+
+.btn {
+	display: block;
+	padding: 5px 10px;
+	cursor: pointer;
+	border-radius: 37px;
+	border: 1px solid var(--font-color);
+	height: 34px;
+}
+
+@media (max-width: 1200px) {
+	.container {
+		max-width: 970px;
+	}
+	.wrap {
+		width: 100%;
+	}
+}
+@media (max-width: 992) {
+	.container {
+		max-width: 750px;
+	}
+}
+@media (max-width: 767px) {
+	.container {
+		max-width: none;
+	}
+}

@@ -5,11 +5,11 @@ const config = require('config')
 class FileService {
 
 	createDir(req, file) {
-		//const filePath = `${config.get('filePath')}\\${file.user}\\${file.path}`
 		const filePath = this.getPath(req, file)
 
 		return new Promise(((resolve, reject) => {
 			try {
+				// invoke code in synchronous mode for executing code one-by-one
 				if (!fs.existsSync(filePath)) {
 					fs.mkdirSync(filePath)
 					return resolve({message: 'File was created'})
@@ -24,9 +24,8 @@ class FileService {
 
 	deleteFile(req, file) {
 		const path = this.getPath(req, file)
-		//console.log('path = '+ path);
 
-		if (file.path === 'dir') {
+		if (file.type === 'dir') {
 			fs.rmdirSync(path)
 		} else {
 			fs.unlinkSync(path)
@@ -34,7 +33,7 @@ class FileService {
 	}
 	
 	getPath(req, file) {
-		return req.filePath  + '\\' + file.user +'\\'+ file.path
+		return req.filePath  + '\\' + String(file.user) +'\\'+ file.path
 	}
 }
 

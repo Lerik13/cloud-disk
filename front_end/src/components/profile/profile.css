@@ -1,0 +1,42 @@
+.profile {
+	width: 100wh;
+}
+.profile__content {
+	width: 100wh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	height: calc(100vh-50px);
+}
+.profile__header {
+	margin: 20px 0;
+}
+
+.profile__body{
+
+}
+
+.profile__name {
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+}
+.profile__name-label {
+	padding-right: 10px;
+}
+
+.profile__avatar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.profile__btn {
+	padding: 1px 5px;
+	margin: 0 10px;
+}
+
+.profile__file {
+	border: none;
+}

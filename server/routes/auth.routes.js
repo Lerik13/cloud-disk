@@ -17,14 +17,14 @@ router.post('/registration',
 	],
 	async (req, res) => {
 	try {
-		console.log(req.body)
-
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-			return res.status(400).json({message: "Incorrect request", errors})
+			let strError = ''
+			errors.errors.map(error => (strError += (strError === '') ? error.msg : ', '+error.msg ));
+			return res.status(400).json({message: "Incorrect request: " + strError})
 		}
 
-		const {email, password} = req.body
+		const {email, password, name} = req.body
 
 		const candidate = await User.findOne({email})
 
@@ -33,9 +33,12 @@ router.post('/registration',
 		}
 
 		const hashPassword = await bcrypt.hash(password, 8)
-		const user = new User({email, password: hashPassword})
+		const user = new User({email, password: hashPassword, name})
 		await user.save()
+		
+		// Create folder for new user
 		await fileService.createDir(req, new File({user: user.id, name: ''}))
+		
 		return res.json({message: "User was created"})
 
 	} catch(e) {
@@ -56,12 +59,14 @@ router.post('/login',
 			if (!isPassValid) {
 				return res.status(400).json({message: "Invalid password"})
 			}
-			const token = jwt.sign({id: user.id}, config.get("secretKey"), {expiresIn: "1h"})
+			const JWT_SECRET = process.env.JWT_SECRET || config.get("secretKey")
+			const token = jwt.sign({id: user.id}, JWT_SECRET, {expiresIn: "1h"})
 			return res.json({
 				token,
 				user: {
 					id: user.id,
 					email: user.email,
+					name: user.name,
 					diskSpace: user.diskSpace,
 					userSpace: user.usedSpace,
 					avatar: user.avatar
@@ -78,17 +83,63 @@ router.get('/auth', authMiddleware,
 	async (req, res) => {
 		try {
 			const user = await User.findOne({_id: req.user.id})
-			const token = jwt.sign({id: user.id}, config.get("secretKey"), {expiresIn: "1h"})
+			const JWT_SECRET = process.env.JWT_SECRET || config.get("secretKey")
+			const token = jwt.sign({id: user.id}, JWT_SECRET, {expiresIn: "1h"})
 			return res.json({
 				token,
 				user: {
 					id: user.id,
 					email: user.email,
+					name: user?.name,
 					diskSpace: user.diskSpace,
 					userSpace: user.usedSpace,
 					avatar: user.avatar
 				}
 			})
+		} catch(e) {
+			console.log(e)
+			res.send({message: "Server error"})
+		}
+	}
+)
+
+// Change name for User
+router.put('/auth', authMiddleware,
+	async (req, res) => {
+		try {
+			const {name} = req.body
+
+			if (!name) {
+				res.status(400)
+				throw new Error('Please add name')
+			}
+
+			// get user using Id in the JWT
+			const user = await User.findOne({_id: req.user.id})
+
+			if (!user) {
+				res.status(401)
+				throw new Error('User not found')
+			}
+			
+			user.name = name;
+			await user.save()
+			
+			const JWT_SECRET = process.env.JWT_SECRET || config.get("secretKey")
+			const token = jwt.sign({id: user.id}, JWT_SECRET, {expiresIn: "1h"})
+			return res.json({
+				token,
+				user: {
+					id: user.id,
+					email: user.email,
+					name: user.name,
+					diskSpace: user.diskSpace,
+					userSpace: user.usedSpace,
+					avatar: user.avatar
+				}
+			})
+			//return res.json(user)
+
 		} catch(e) {
 			console.log(e)
 			res.send({message: "Server error"})

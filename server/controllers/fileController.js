@@ -5,18 +5,21 @@ const User = require('../models/User')
 const File = require('../models/File')
 const Uuid = require('uuid')
 
+const STATIC_PATH = process.env.STATIC_PATH || config.get('staticPath')
+
 class FileController {
 	async createDir(req, res) {
 		try {
 			const {name, type, parent} = req.body
 			const file = new File({name, type, parent, user: req.user.id})
 			const parentFile = await File.findOne({_id: parent})
+			
 			if (!parentFile) {
 				file.path = name
 				await fileService.createDir(req, file)
 			} else {
 				file.path = `${parentFile.path}\\${file.name}`
-				await fileService.createDir(file)
+				await fileService.createDir(req, file)
 				parentFile.childs.push(file._id)
 				await parentFile.save()
 			}
@@ -35,7 +38,7 @@ class FileController {
 			
 			switch (sort) {
 				case 'name':
-					// sort (2-й параметр: напрaвление сортировки 1=по-возростанию, -1= по-убыванию)
+					// sort (2nd argument: sort direction: 1=asc, -1=desd)
 					files = await File.find({user: req.user.id, parent: req.query.parent}).sort({ name: 1 })
 					break
 				case 'type':
@@ -111,11 +114,9 @@ class FileController {
 
 	async downloadFile(req, res) {
 		try {
-			//console.log(req);
 			const file = await File.findOne({_id: req.query.id, user: req.user.id}) 
 			const path = fileService.getPath(req, file)
 
-			//console.log('path = ', path);
 			if (fs.existsSync(path)) {
 				return res.download(path, file.name)
 			}
@@ -132,14 +133,14 @@ class FileController {
 			if (!file) {
 				return res.status(400).json({message: 'File not found in BD'})
 			}
-			//console.log('!!!!! path = '+fileService.getPath(file));
+			
 			if (!fs.existsSync(fileService.getPath(req, file))) {
-				await file.remove()		// удаление модели д-х из БД = подчищение несоответсвий
+				await file.remove()		// delete data from DB = cleaning up inconsistencies
 				return res.json({message: 'File not found'})
 			}
 			
-			fileService.deleteFile(file) // физическое удаление файла
-			await file.remove()			 // удаление модели д-х из БД 
+			fileService.deleteFile(req, file) // physical file removal
+			await file.remove()			 	  // delete data from DB
 			return res.json({message: 'File was deleted'})
 		} catch(e) {
 			console.log(e);
@@ -166,8 +167,18 @@ class FileController {
 			const file = req.files.file;
 			const user = await User.findById(req.user.id)
 			const avatarName = Uuid.v4() + ".jpg"
-			file.mv(config.get('staticPath') +"\\"+ avatarName)
+
+			// remove old avatar file
+			if (user.avatar !== null) {
+				if (fs.existsSync(STATIC_PATH +"\\"+ user.avatar)) {
+					fs.unlinkSync(STATIC_PATH +"\\"+ user.avatar)
+				}
+			}
+
+			// upload new file
+			file.mv(STATIC_PATH +"\\"+ avatarName)
 			user.avatar = avatarName
+
 			await user.save()
 			return res.json(user)
 
@@ -179,7 +190,7 @@ class FileController {
 	async deleteAvatar(req, res) {
 		try {
 			const user = await User.findById(req.user.id)
-			fs.unlinkSync(config.get('staticPath') +"\\"+ user.avatar)
+			fs.unlinkSync(STATIC_PATH +"\\"+ user.avatar)
 			user.avatar = null
 			await user.save()
 			return res.json(user)

@@ -1,0 +1,50 @@
+.authorization {
+	display: flex;
+	flex-direction: column;
+	width: 500px;
+	align-items: center;
+	background-color: #fff;
+	border-radius: 20px;
+	padding: 30px;
+	align-self: center;
+	margin-top: 100px;
+}
+
+.authorization__header {
+	font-size: 30px;
+	font-weight: 700;
+}
+
+.authorization input{
+	margin: 10px 20px;
+}
+.authorization__btn {
+	border: none;
+	background-color: var(--font-color);
+	border-radius: 8px;
+	color: #fff;
+	font-weight: 700;
+	padding: 5px 10px;
+	align-self: flex-end;
+	margin-top: 10px;
+}
+.authorization__btn:focus {
+	cursor: pointer;
+}
+
+@media (max-width: 512px) {
+	.authorization {
+		width: 100vw;
+	}
+}
+/*
+@media (max-width: 992) {
+	.authorization {
+		max-width: 750px;
+	}
+}
+@media (max-width: 767px) {
+	.authorization {
+		max-width: none;
+	}
+}*/
