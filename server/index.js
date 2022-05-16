@@ -21,6 +21,17 @@ app.use(express.static(path.join(__dirname, 'static')))
 app.use("/api/auth", authRouter)
 app.use("/api/files", fileRouter)
 
+// Serve Frontend
+if (process.env.NODE_ENV === 'production') {
+	// Set build folder as static
+	app.use(express.static(path.join(__dirname, '../front_end/build')))
+
+	app.get('*', (req, res) => res.sendFile(__dirname, '../', 'front_end', 'build', 'index.html'))
+} else {
+	app.get('/', (req, res) => {
+		res.status(200).json({message: 'Welcome to  Cloud Disk API'})
+	})
+}
 
 const start = async () => {
 	try {
