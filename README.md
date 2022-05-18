@@ -7,8 +7,9 @@ using stack of technologies:  MERN = MongoDB + ExpressJS + React + NodeJS;
 
 State-management: Redux
 
-MongoDB models:
+!Todo: upload static files (avatars) to S9
 
+MongoDB models:<br>
 ![DB Schema](https://github.com/Lerik13/house-marketplace/blob/master/schema_firebase_db.jpg?raw=true "DB Schema")
 
 ### Client Functionality
