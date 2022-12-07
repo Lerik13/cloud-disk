@@ -4,7 +4,7 @@
   "description": "Cloud Disc App - MERN",
   "main": "server.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "node server/index.js",
     "server": "nodemon server/index.js",
     "client": "npm start --prefix front_end",
 	"dev": "concurrently \"npm run server\" \"npm run client\"",
