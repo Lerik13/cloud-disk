@@ -10,7 +10,7 @@ State-management: Redux
 !Todo: upload static files (avatars) to S9
 
 MongoDB models:<br>
-![DB Schema](https://github.com/Lerik13/house-marketplace/blob/master/schema_firebase_db.jpg?raw=true "DB Schema")
+![DB Schema](https://github.com/Lerik13/cloud-disk/blob/main/DB_schema.jpg?raw=true "DB Schema")
 
 ### Client Functionality
 1. Register User (default diskSpace for user=10Gb)
