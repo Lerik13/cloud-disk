@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import {getFiles, uploadFile} from '../../actions/file'
-import { setCurrentDir, setPopupDisplay, setCurrentPath, setFileView } from '../../reducers/fileReducer';
+import { setCurrentDir, setPopupDisplay, setCurrentPath, setFileView, popFromStack } from '../../reducers/fileReducer';
 import './disk.css'
 import FileList from "./fileList/FileList"
 import Popup from "./Popup"
@@ -27,7 +27,8 @@ const Disk = () => {
 	}
 
 	function backClickHandler() {
-		const backDirId = dirStack.pop()
+		const backDirId = [...dirStack].pop()
+		dispatch(popFromStack())
 		dispatch(setCurrentDir(backDirId))
 		
 		const prevPath = currentPath.substr(0, currentPath.lastIndexOf("\\"))

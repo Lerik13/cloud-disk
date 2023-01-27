@@ -9,7 +9,6 @@ import deleteIcon from '../../../../assets/img/delete.svg'
 import downloadIcon from '../../../../assets/img/download.svg'
 import sizeFormat from '../../../../utils/sizeFormat';
 
-
 const File = ({file}) => {
 	const dispatch = useDispatch();
 	const currentDir = useSelector(state => state.files.currentDir)

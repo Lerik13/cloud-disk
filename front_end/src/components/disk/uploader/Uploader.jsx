@@ -5,9 +5,9 @@ import './uploader.css';
 import UploadFile from './UploadFile';
 
 const Uploader = () => {
-	//const files = [{id:1, name: "file1", progress:50}, {id:2, name: "file2", progress:0}]
+	//const files = [{id:1, name: "file1", progress:75}, {id:2, name: "file2", progress:0}]
 	const files = useSelector(state => state.upload.files)
-	const isVisible = useSelector(state => state.upload.isVisible)
+	const isVisible = useSelector(state => state.upload.isVisible)	
 	const dispatch = useDispatch()
 
 	return ( isVisible &&
