@@ -106,7 +106,7 @@
 }
 
 .drop-area {
-	width: 100%;
+	/* width: 100%; */
 	height: calc(100vh - 50px - 40px);
 	margin: 20px;
 	border: 2px dashed var(--font-color);
