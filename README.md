@@ -1,7 +1,7 @@
 # Cloud Storage/Disk
 Client-Server app like google or yandex drive for storing user's files in some cloud-server with posibility to create tree-structure of files with folders for organizing files
 ```
-test user: john@gmail.com, password: john123
+test user: user@gmail.com, password: user123
 ```
 using stack of technologies:  MERN = MongoDB + ExpressJS + React + NodeJS;
 
@@ -16,18 +16,44 @@ MongoDB models:<br>
 1. Register User (default diskSpace for user=10Gb)
 2. Login/Logout (Saving JWT-token in user's Local Storage)
 ```
-test user: john@gmail.com, password: john123
+test user: user@gmail.com, password: user123
 ```
+![Login-Register-User](https://github.com/Lerik13/cloud-disk/blob/main/screenshots/0.jpg?raw=true "Login/Register User")
+
 3. Create new folder
+
+![Create-Folder](https://github.com/Lerik13/cloud-disk/blob/main/screenshots/1.jpg?raw=true "Create Folder")
+
 4. Folder Navigation
+
 5. Upload files (check if (usedSpace + size of new file) < diskSpace for user)
+
 6. Drag and drop for uploading files
+
+![Upload-files](https://github.com/Lerik13/cloud-disk/blob/main/screenshots/2.jpg?raw=true "Upload files")
+
 7. Display progress bar of downloading files
-8. Delete file/folder (physical file removal + delete note from DB in File-model)
-9. Sort files by name, type or date
-10. Search file by name (not an exact match)
-11. Profile page: change avatar picture
-                                                                    
+
+![Progressbar](https://github.com/Lerik13/cloud-disk/blob/main/screenshots/3.jpg?raw=true "Progressbar for uploading files")
+
+8. Delete file/folder (physical file removal + delete node from DB in File-model)
+
+9. Search file by name (not an exact match)
+
+![Search](https://github.com/Lerik13/cloud-disk/blob/main/screenshots/7.jpg?raw=true "Search")
+
+10. Sort files by name, type or date (by default = by type)
+
+![Sort](https://github.com/Lerik13/cloud-disk/blob/main/screenshots/4.jpg?raw=true "Sort by type")
+
+11. Table view or list of files and folders (by default = table view)
+
+![View](https://github.com/Lerik13/cloud-disk/blob/main/screenshots/6.jpg?raw=true "List or table view")
+
+12. Profile page: change name and avatar picture
+
+![Profile](https://github.com/Lerik13/cloud-disk/blob/main/screenshots/5.jpg?raw=true "Profile")
+
 ### Developing details
 #### Backend libs:
 - express -- Express-framework for creating web-apps using NodeJS
