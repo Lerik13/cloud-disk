@@ -52,6 +52,7 @@
 
 .upload-file__name {
 	padding-right: 10px;
+	margin-bottom: 7px;
 }
 .upload-file__remove {
 	position: absolute;

@@ -1,14 +1,14 @@
 import axios from 'axios'
 import { hideLoader, showLoader } from '../reducers/appReducer'
 import {setFiles, addFile, deleteFileAction} from '../reducers/fileReducer'
-import { addUploadFile, changeUploadFile, removeUploadFile, showUploader } from '../reducers/uploadReducer'
+import { addUploadFile, changeUploadFile, showUploader } from '../reducers/uploadReducer'
 import {API_URL} from "../config";
 
 export function getFiles(dirId, sort) {
 	return async dispatch => {
 		try {
 			dispatch(showLoader())
-			//console.log('get Files: dirId='+dirId+', sort='+sort);
+
 			let url = `${API_URL}api/files`
 			if (dirId && sort) {
 				url = `${API_URL}api/files?parent=${dirId}&sort=${sort}`
@@ -20,14 +20,11 @@ export function getFiles(dirId, sort) {
 				url = `${API_URL}api/files?sort=${sort}`
 			}
 			
-			//console.log('url=',url);
-
 			const response = await axios.get(url, {
 				headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
 			})
 			dispatch(setFiles(response.data))
-			
-			//console.log(response.data)
+		
 		} catch (e) {
 			alert(e.response.data.message)
 		} finally {
@@ -47,7 +44,7 @@ export function createDir(dirId, name) {
 				headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
 			})
 			dispatch(addFile(response.data))
-			//console.log(response.data)
+			
 		} catch (e) {
 			alert(e.response.data.message)
 		}
@@ -63,17 +60,17 @@ export function uploadFile(file, dirId) {
 				formData.append('parent', dirId)
 			}
 			
-			const uploadFile = {name: file.name, progress: 0, id: Date.now() } //for Uploader
+			const newUploadFile = { name: file.name, progress: 0, id: Date.now()+file.size } //for Uploader
 			dispatch(showUploader())
-			dispatch(addUploadFile(uploadFile))
+			dispatch(addUploadFile(newUploadFile))
 
 			const response = await axios.post(`${API_URL}api/files/upload`, formData, {
 				headers: {Authorization: `Bearer ${localStorage.getItem('token')}`},
 				onUploadProgress: progressEvent => { // get size of file, using Header
 					const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
 					if (totalLength) {
-						uploadFile.progress = Math.round( (progressEvent.loaded * 100) / totalLength )
-						dispatch(changeUploadFile(uploadFile))
+						let new_progress = Math.round( (progressEvent.loaded * 100) / totalLength )
+						dispatch(changeUploadFile({...newUploadFile, progress: new_progress}))
 					}
 				}
 			})
@@ -85,15 +82,13 @@ export function uploadFile(file, dirId) {
 }
 
 export async function downloadFile(file) {
-	//console.log('downloadFile =', file)
 	const response = await fetch(`${API_URL}api/files/download?id=${file._id}`, {
 		headers: {
 			Authorization: `Bearer ${localStorage.getItem('token')}`
 		}
 	})
 	if (response.status === 200) {
-		//console.log('after status 200');
-		const blob = await response.blob() // ~ физич. ф-л объект, от сервера получаем ф-л в бинарном виде, нужно преобразовать в нормальный ф-л
+		const blob = await response.blob() // from server we get file in binary form, need to be converted into normal file object
 		const downloadUrl = window.URL.createObjectURL(blob)
 		const link = document.createElement('a');
 		link.href = downloadUrl
@@ -112,10 +107,8 @@ export function deleteFile(file) {
 					Authorization: `Bearer ${localStorage.getItem('token')}`
 				}
 			})
-			console.log('DELETE file in file.js: response: '+response)
 			dispatch(deleteFileAction(file._id))
 			alert(response.data.message)
-			//console.log(response.data)
 		} catch (e) {
 			alert(e.response.data.message)
 		}

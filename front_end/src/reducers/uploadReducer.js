@@ -12,7 +12,7 @@ const defaultState = {
 export default function uploadReducer(state = defaultState, action) {
 	switch (action.type) {
 		case SHOW_UPLOADER: return {...state, isVisible: true }
-		case HIDE_UPLOADER: return {...state, isVisible: false }
+		case HIDE_UPLOADER: return {...state, isVisible: false, files: [] }
 		case ADD_UPLOAD_FILE: 
 			return {...state, files: [...state.files, action.payload]}
 		case REMOVE_UPLOAD_FILE: 

@@ -29,7 +29,9 @@ const File = ({file}) => {
 
 	function deleteClickHandler(e){
 		e.stopPropagation()
-		dispatch(deleteFile(file))
+		if (window.confirm("Are you sure you want to delete file?") === true) {
+			dispatch(deleteFile(file))
+		}
 	}
 
 	if (fileView === 'list') {

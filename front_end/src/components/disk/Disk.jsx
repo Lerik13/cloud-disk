@@ -73,7 +73,6 @@ const Disk = () => {
 			<div className='disk__path'>{currentPath}</div>
 
 			<div className="disk__btns">
-				{/*currentDir && <button className="btn disk__back" onClick={()=> backClickHandler()}>&larr; Back</button>*/}
 				{currentDir && <button className="btn disk__back" onClick={()=> backClickHandler()}><img src={backIcon} alt="Go Back" /></button>}
 				<div className="disk__folder">
 					<button className='btn disk__folder-create' onClick={() => showPopupHandler()}>Create Folder</button>
