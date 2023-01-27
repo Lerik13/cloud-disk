@@ -46,7 +46,7 @@ test user: user@gmail.com, password: user123
 
 ![Sort](https://github.com/Lerik13/cloud-disk/blob/main/screenshots/4.jpg?raw=true "Sort by type")
 
-11. Table view or list of files and folders (by default = table view)
+11. Table view or list of files and folders
 
 ![View](https://github.com/Lerik13/cloud-disk/blob/main/screenshots/6.jpg?raw=true "List or table view")
 
