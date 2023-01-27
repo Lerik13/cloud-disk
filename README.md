@@ -1,5 +1,6 @@
 # Cloud Storage/Disk
-Client-Server app like google or yandex drive for storing user's files in some cloud-server with posibility to create tree-structure of files with folders for organizing files
+Client-Server app like google or yandex drive for storing user's files in some cloud-server with posibility to create tree-structure of files with folders for organizing files.
+There is very useful feature to drag-and-drop multiple files with opening progressbar window, where user can see the download progresses in % for each file.
 ```
 test user: user@gmail.com, password: user123
 ```
