@@ -1,7 +1,7 @@
 # Cloud Storage/Disk
 
 Client-Server app, like google or yandex drive for storing user's files in some cloud-server.
-There is posibility to create tree-structure of files with folders for organizing files (navigation with button 'back').
+There is the possibility to create tree-structure of files with folders for organizing files (navigation with button 'back').
 User can upload multiple files also by useful feature 'drag-and-drop' with opening progressbar window, where user can see the uploading progresses in % for each file.
 ```
 test user: user@gmail.com, password: user123
